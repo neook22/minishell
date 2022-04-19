@@ -108,14 +108,16 @@ int	ft_one_arg(char *arg, t_dyna *newargs, char qte, char **env)
 char	**ft_expand_all_vars(char **oldargs, char **env)
 {
 	t_dyna	newargs;
+	char	**save_oldargs;
 
 	ft_init_dyna(&newargs);
+	save_oldargs = oldargs;
 	while (*oldargs)
 	{
 		ft_one_arg(*oldargs, &newargs, 0, env);
 		++oldargs;
 	}
-//	ft_free_tab(oldargs);
+	ft_free_strtab(save_oldargs);
 	ft_dyna_zeros(&newargs, sizeof(char *));
 	return (ft_dedyna(&newargs));
 }

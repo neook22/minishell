@@ -10,7 +10,7 @@ static void	print_tok(t_tok const *tok)
 			printf("'%s' ", tok->data.str);
 			break;
 		case REDIR:
-			printf("REDIR %d, %s ", tok->data.redir->fd, tok->data.redir->filename);
+			printf("REDIR %d, %d, %s ", tok->data.redir->fd, tok->data.redir->hdoc_fd, tok->data.redir->filename);
 			break;
 		case OP:
 			printf("OP %s ", ops[tok->data.op]);
@@ -31,7 +31,11 @@ int main(int ac, char **av)
 		return (-1);
 	}
 	t_tok tok;
-	while (ft_consume_token(av + 1, &tok))
+	ft_consume_token(av + 1, &tok);
+	while (tok.type != END)
+	{
 		print_tok(&tok);
+		ft_consume_token(av + 1, &tok);
+	}
 	return (0);
 }

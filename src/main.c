@@ -1,3 +1,4 @@
+#include "heredoc.h"
 #include "exec.h"
 #include "tree.h"
 #include "built_ins.h"
@@ -24,8 +25,11 @@ int main(int ac, char **av, char **envp)
 	{
 		line_save = line;
 		t = ft_tree_of_line(&line);
+		ft_hdoc_readall();
 		ret = ft_exec(t, &env);
 		free(line_save);
+		ft_hdoc_closeall();
+		ft_free_tree(t);
 		line = readline("schnell-1.1$ ");
 	}
 	return (ret);

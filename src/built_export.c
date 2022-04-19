@@ -6,7 +6,7 @@
 /*   By: sjeuneje <sjeuneje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:45:03 by mdelforg          #+#    #+#             */
-/*   Updated: 2022/04/14 15:41:21 by sjeuneje         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:18:13 by sjeuneje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ int	ft_check_var(char *str)
 	while (str[i] && str[i] != '=')
 	{
 		if (ft_strchr("!@#$%^&*()-+[]{}\\|;:\'\",.<>/?˜`", str[i]))
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isalnum((int)str[i]) && !ft_strchr("@#$%^*-_=+[]{}\\|:,./?˜", str[i]))
 			return (1);
 		i++;
 	}

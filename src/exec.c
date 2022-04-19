@@ -103,6 +103,8 @@ int	ft_redirs(t_redir **redirs)
 
 	last_in = 0;
 	last_out = 1;
+	if (!redirs)
+		return (0);
 	size_redirs = ft_get_size(redirs);
 	fd_redirs = malloc(size_redirs * sizeof(int));
 	if (!fd_redirs)
@@ -111,7 +113,14 @@ int	ft_redirs(t_redir **redirs)
 	while (redirs[i])
 	{
 		/* gérer les erreurs de open */
-		fd_redirs[i] = open(redirs[i]->filename, redirs[i]->option); // check options permisions
+		if (redirs[i]->hdoc_fd == -1)
+		{
+			fd_redirs[i] = open(redirs[i]->filename, redirs[i]->option); // check options permisions
+		}
+		else
+		{
+			fd_redirs[i] = redirs[i]->hdoc_fd;
+		}
 		if (redirs[i]->fd == 0)
 			last_in = fd_redirs[i];
 		else
@@ -127,8 +136,9 @@ int	ft_redirs(t_redir **redirs)
 
 	// 3. close
 	i = 0;
-	while (fd_redirs[i])
+	while (i < size_redirs)
 		close(fd_redirs[i++]);
+	free(fd_redirs);
 	return (0);
 }
 

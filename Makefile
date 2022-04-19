@@ -1,4 +1,5 @@
-SRC=dyna_mem.c varexpand.c get_token.c utils.c tree.c exec.c exec_utils.c vars.c built_cd.c built_export.c built_unset.c builtins.c environnement.c main.c
+SRC=dyna_mem.c varexpand.c get_token.c utils.c tree.c exec.c exec_utils.c vars.c built_cd.c built_export.c built_unset.c builtins.c environnement.c token.c heredoc.c
+MAIN= main.c
 SRCDIR=src
 OBJ=${SRC:.c=.o}
 OBJDIR=obj
@@ -7,11 +8,11 @@ TESTDIR=test
 NAME=minishell
 CFLAGS=-Wall -Wextra -Werror -I ${INCLDIR}
 
-#${NAME} : ${addprefix ${OBJDIR}/, ${OBJ}} libft/libft.a
-#	gcc ${CFLAGS} -o ${NAME} $^ -L libft -lft -lreadline -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew//opt/readline/include
+${NAME} : ${addprefix ${OBJDIR}/, ${OBJ}} libft/libft.a ${SRCDIR}/${MAIN}
+	gcc ${CFLAGS} -o ${NAME} $^ -L libft -lft -lreadline -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew//opt/readline/include
 
-${NAME} : ${addprefix ${OBJDIR}/, ${OBJ}} libft/libft.a
-	gcc ${CFLAGS} -o ${NAME} $^ -L libft -lft -lreadline
+# ${NAME} : ${addprefix ${OBJDIR}/, ${OBJ}} libft/libft.a ${SRCDIR}/${MAIN}
+# 	gcc ${CFLAGS} -o ${NAME} $^ -L libft -lft -lreadline
 
 
 libft/libft.a:
@@ -21,7 +22,7 @@ ${OBJDIR}/%.o: ${SRCDIR}/%.c
 	gcc ${CFLAGS} -c $< -o $@
 
 test_%: ${TESTDIR}/test_%.c ${addprefix ${OBJDIR}/, ${OBJ}} libft/libft.a
-	gcc ${CFLAGS} -o $@ $^ -L libft -lft
+	gcc ${CFLAGS} -o $@ $^ -L libft -lft -lreadline -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew//opt/readline/include
 
 all: ${NAME}
 	@#empty
